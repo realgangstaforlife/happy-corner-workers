@@ -1,0 +1,19 @@
+name = "happy-corner-workers"
+main = "src/index.js"
+compatibility_date = "2024-04-05"
+compatibility_flags = ["nodejs_compat"]
+
+# [vars]
+# FIREBASE_PROJECT_ID = "tu-project-id"
+# FIREBASE_CLIENT_EMAIL = "tu-client-email"
+# ALLOWED_ORIGINS = "https://happycorner.top,https://www.happycorner.top"
+# 
+# Los secrets (como FIREBASE_PRIVATE_KEY y RESEND_API_KEY) debes configurarlos
+# directamente en Cloudflare usando:
+# npx wrangler secret put FIREBASE_PRIVATE_KEY
+# npx wrangler secret put RESEND_API_KEY
+
+# [[r2_buckets]]
+# binding = "BUCKET"
+# bucket_name = "happy-corner-storage"
+# preview_bucket_name = "happy-corner-storage-dev"
