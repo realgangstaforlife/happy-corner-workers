@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { getFirestoreDoc, setFirestoreDoc } from '../utils/firebase.js';
 
 

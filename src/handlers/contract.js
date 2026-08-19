@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import { sendEmail } from '../utils/resend.js';
 import { getFirestoreDoc, setFirestoreDoc, verifyIdToken, jsToFirestore, firestoreToJs } from '../utils/firebase.js';
 import { uploadToR2, deleteFromR2 } from '../utils/r2.js';
