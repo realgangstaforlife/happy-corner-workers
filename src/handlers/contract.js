@@ -219,7 +219,7 @@ export default async function handler(request, env, ctx) {
                 return Response.json({ error: 'No autorizado para solicitar PIN de este usuario.' }, { status: 403 });
             }
 
-            const resendKey = process.env.RESEND_API_KEY;
+            const resendKey = env.RESEND_API_KEY;
             if (!resendKey) return Response.json({ error: 'El servicio de correos no esta configurado.' }, { status: 500 });
 
             const pinRef = db.collection('verificationPins').doc(uid);
@@ -485,7 +485,7 @@ export default async function handler(request, env, ctx) {
             // Email PDF to admin and client
             const userSnap = await getFirestoreDoc(env, 'users', uid);
             const clienteEmail = userSnap.data()?.email;
-            const resend = new Resend(process.env.RESEND_API_KEY);
+            const resend = new Resend(env.RESEND_API_KEY);
             const pdfBase64 = pdfBuffer.toString('base64');
             const destinatarios = ['happycorner.com@gmail.com'];
             if (clienteEmail) destinatarios.push(clienteEmail);

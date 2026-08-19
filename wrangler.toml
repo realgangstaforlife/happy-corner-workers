@@ -8,3 +8,7 @@ vars = { FIREBASE_PROJECT_ID = "happycorner-c17d3" }
 routes = [
   { pattern = "staging-api.happycorner.top/*", zone_id = "937c44694f6e5e8d88fd69023cca9204" }
 ]
+
+[observability.logs]
+enabled = true
+invocation_logs = true

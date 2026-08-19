@@ -16,7 +16,7 @@ export default async function handler(request, env, ctx) {
         
         if (!token) return Response.json({ error: 'Token missing.' }, { status: 401 });
         
-        const v = verifyToken(token, process.env.ORDER_VERIFY_SECRET);
+        const v = verifyToken(token, env.ORDER_VERIFY_SECRET);
         if (!v.ok) return Response.json({ error: 'Token inválido o vencido.' }, { status: 401 });
         if (v.payload.o !== orderId) return Response.json({ error: 'Token no coincide con el pedido.' }, { status: 401 });
 
@@ -47,11 +47,11 @@ export default async function handler(request, env, ctx) {
                     `🛒 *Pedido:* ${escapeMarkdown(resumen)}\n\n` +
                     `*Nota:* Pedido ${actionStr.toLowerCase()} para el día de mañana.`;
 
-        const tgRes = await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`, {
+        const tgRes = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                chat_id: process.env.TELEGRAM_CHAT_ID,
+                chat_id: env.TELEGRAM_CHAT_ID,
                 text: msg,
                 parse_mode: 'Markdown',
                 reply_markup: {

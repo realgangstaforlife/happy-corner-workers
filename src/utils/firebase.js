@@ -51,7 +51,7 @@ async function getGoogleAccessToken(env) {
     // Basic implementation for generating a JWT to get Google access token.
     // In production, we might want to cache this token until it expires (3600s).
     const clientEmail = env.FIREBASE_CLIENT_EMAIL || 'dummy@dummy.com';
-    const rawKey = env.FIREBASE_PRIVATE_KEY;
+    const rawKey = env.FIREBASE_PRIVATE_KEY ? env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : '';
     if (!rawKey) {
         return 'mock_token';
     }

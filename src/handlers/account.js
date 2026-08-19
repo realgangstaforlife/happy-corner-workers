@@ -274,7 +274,7 @@ export default async function handler(request, env, ctx) {
                     const resetLink = await auth.generatePasswordResetLink(cleanEmail, actionCodeSettings);
 
                     // Send custom branded email via Resend
-                    const resendKey = process.env.RESEND_API_KEY;
+                    const resendKey = env.RESEND_API_KEY;
                     if (resendKey) {
                         const { Resend } = await import('resend');
                         const resend = new Resend(resendKey);
@@ -328,7 +328,7 @@ export default async function handler(request, env, ctx) {
                 const { email, name } = reqBody || {};
                 if (!email || !name) return Response.json({ error: 'Falta email o nombre.' }, { status: 400 });
                 try {
-                    const resendKey = process.env.RESEND_API_KEY;
+                    const resendKey = env.RESEND_API_KEY;
                     const { Resend } = await import('resend');
                     const resend = new Resend(resendKey);
                     await resend.emails.send({
@@ -451,7 +451,7 @@ export default async function handler(request, env, ctx) {
                 const email = userData.email;
                 if (!email) return Response.json({ error: 'La cuenta no tiene correo registrado.' }, { status: 400 });
 
-                const resendKey = process.env.RESEND_API_KEY;
+                const resendKey = env.RESEND_API_KEY;
                 if (!resendKey) return Response.json({ error: 'El servicio de correos no está configurado.' }, { status: 500 });
 
                 // check rate limit of 3 minutes
@@ -611,7 +611,7 @@ export default async function handler(request, env, ctx) {
                 await auth.deleteUser(targetUid);
 
                 if (isCallerAdmin && targetData.email) {
-                    const resendKey = process.env.RESEND_API_KEY;
+                    const resendKey = env.RESEND_API_KEY;
                     if (resendKey) {
                         try {
                             const { Resend } = await import('resend');
@@ -719,7 +719,7 @@ export default async function handler(request, env, ctx) {
                     });
 
                     try {
-                        const resendKey = process.env.RESEND_API_KEY;
+                        const resendKey = env.RESEND_API_KEY;
                         const { Resend } = await import('resend');
                         const resend = new Resend(resendKey);
                         await resend.emails.send({
@@ -808,7 +808,7 @@ export default async function handler(request, env, ctx) {
                     </div>
                 `;
                 
-                const resendKey = process.env.RESEND_API_KEY;
+                const resendKey = env.RESEND_API_KEY;
                 if (!resendKey) return Response.json({ error: 'Email service not configured' }, { status: 500 });
                 
                 const { Resend } = await import('resend');
@@ -870,7 +870,7 @@ export default async function handler(request, env, ctx) {
                     <p style="margin:20px 0 16px; line-height:1.6;">Si tienes alguna duda sobre este reembolso, por favor contáctanos.</p>
                 `;
                 
-                const resendKey = process.env.RESEND_API_KEY;
+                const resendKey = env.RESEND_API_KEY;
                 if (!resendKey) return Response.json({ error: 'Email service not configured' }, { status: 500 });
                 
                 const { Resend } = await import('resend');
@@ -914,7 +914,7 @@ export default async function handler(request, env, ctx) {
                     </div>
                 `;
                 
-                const resendKey = process.env.RESEND_API_KEY;
+                const resendKey = env.RESEND_API_KEY;
                 if (!resendKey) return Response.json({ error: 'Email service not configured' }, { status: 500 });
                 
                 const { Resend } = await import('resend');
@@ -954,7 +954,7 @@ export default async function handler(request, env, ctx) {
                     </div>
                 `;
                 
-                const resendKey = process.env.RESEND_API_KEY;
+                const resendKey = env.RESEND_API_KEY;
                 if (!resendKey) return Response.json({ error: 'Email service not configured' }, { status: 500 });
                 
                 const { Resend } = await import('resend');
@@ -1066,7 +1066,7 @@ export default async function handler(request, env, ctx) {
                     return Response.json({ error: 'Faltan destinatarios, asunto o cuerpo.' }, { status: 400 });
                 }
 
-                const resendKey = process.env.RESEND_API_KEY;
+                const resendKey = env.RESEND_API_KEY;
                 if (!resendKey) return Response.json({ error: 'El servicio de correos no está configurado.' }, { status: 500 });
 
                 const { Resend } = await import('resend');
@@ -1306,7 +1306,7 @@ export default async function handler(request, env, ctx) {
 
                 const batch = db.batch();
                 const emailPromises = [];
-                const resendKey = process.env.RESEND_API_KEY;
+                const resendKey = env.RESEND_API_KEY;
 
                 if (resendKey) {
                     const { Resend } = await import('resend');
@@ -1419,7 +1419,7 @@ export default async function handler(request, env, ctx) {
                 const { subject, body, imageUrls } = reqBody || {};
                 if (!subject || !body) return Response.json({ error: 'Falta el asunto o el cuerpo.' }, { status: 400 });
 
-                const resendKey = process.env.RESEND_API_KEY;
+                const resendKey = env.RESEND_API_KEY;
                 if (!resendKey) return Response.json({ error: 'El servicio de correos no está configurado.' }, { status: 500 });
 
                 // Get all marketing opt-in users
@@ -1540,7 +1540,7 @@ export default async function handler(request, env, ctx) {
 
                     if (reqData.userEmail) {
                         try {
-                            const resendKey = process.env.RESEND_API_KEY;
+                            const resendKey = env.RESEND_API_KEY;
                             const { Resend } = await import('resend');
                             const resend = new Resend(resendKey);
                             await resend.emails.send({
@@ -1586,7 +1586,7 @@ export default async function handler(request, env, ctx) {
 
                     if (reqData.userEmail) {
                         try {
-                            const resendKey = process.env.RESEND_API_KEY;
+                            const resendKey = env.RESEND_API_KEY;
                             const { Resend } = await import('resend');
                             const resend = new Resend(resendKey);
                             await resend.emails.send({
