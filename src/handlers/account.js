@@ -2,7 +2,6 @@ import { getFirestoreDoc, setFirestoreDoc, verifyIdToken, jsToFirestore, firesto
 
 import { uploadToR2, deleteFromR2 } from '../utils/r2.js';
 
-import fetch from 'node-fetch';
 
 function getEmailTemplate(content, title = 'Happy Corner') {
     return `<!DOCTYPE html>
