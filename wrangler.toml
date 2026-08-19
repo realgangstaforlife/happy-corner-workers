@@ -4,10 +4,7 @@ compatibility_date = "2024-04-05"
 compatibility_flags = ["nodejs_compat"]
 
 [env.staging]
-vars = { 
-  FIREBASE_PROJECT_ID = "happycorner-c17d3",
-  FIREBASE_CLIENT_EMAIL = "firebase-adminsdk-fbsvc@happycorner-c17d3.iam.gserviceaccount.com"
-}
+vars = { FIREBASE_PROJECT_ID = "happycorner-c17d3", FIREBASE_CLIENT_EMAIL = "firebase-adminsdk-fbsvc@happycorner-c17d3.iam.gserviceaccount.com" }
 routes = [
   { pattern = "staging-api.happycorner.top/*", zone_id = "937c44694f6e5e8d88fd69023cca9204" }
 ]
