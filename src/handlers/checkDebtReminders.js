@@ -18,7 +18,7 @@
 // ── Firebase Admin init (singleton) ─────────────────────────────────────────
 function getAdminDb() {
     if (!getApps().length) {
-        const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
+        const serviceAccount = JSON.parse(env.FIREBASE_SERVICE_ACCOUNT || '{}');
         initializeApp({ credential: cert(serviceAccount) });
     }
     return getFirestore();
@@ -29,7 +29,7 @@ async function sendEmail({ to, subject, html }) {
     const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+            'Authorization': `Bearer ${env.RESEND_API_KEY}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -66,7 +66,7 @@ export default async function handler(request, env, ctx) {
 
     // Security: Vercel cron passes Authorization header
     const authHeader = request.headers['authorization'];
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}` && process.env.NODE_ENV === 'production') {
+    if (authHeader !== `Bearer ${env.CRON_SECRET}` && env.NODE_ENV === 'production') {
         // Allow unauthenticated only in dev; in prod require secret
         // Comment the below line if you want to open it up
         // return Response.json({ error: 'Unauthorized' }, { status: 401 });
@@ -74,8 +74,8 @@ export default async function handler(request, env, ctx) {
 
     try {
         const db = getAdminDb();
-        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://happycorner.com';
-        const adminEmail = process.env.ADMIN_EMAIL || 'happycorner.com@gmail.com';
+        const siteUrl = env.NEXT_PUBLIC_SITE_URL || 'https://happycorner.com';
+        const adminEmail = env.ADMIN_EMAIL || 'happycorner.com@gmail.com';
 
         const nowMs = Date.now();
         const threeDaysMs = 3 * 24 * 60 * 60 * 1000;

@@ -8,7 +8,7 @@ export default async function handler(request, env, ctx) {
   
   if (request.method !== "POST") return;
 
-  const secret = process.env.TELEGRAM_WEBHOOK_SECRET;
+  const secret = env.TELEGRAM_WEBHOOK_SECRET;
   if (secret) {
     const headerSecret = request.headers["x-telegram-bot-api-secret-token"];
     if (headerSecret !== secret) {
@@ -26,7 +26,7 @@ export default async function handler(request, env, ctx) {
   const chatId = reqBody.message.chat.id;
   const msgCmdId = reqBody.message.message_id;
 
-  const allowedChatId = process.env.TELEGRAM_CHAT_ID;
+  const allowedChatId = env.TELEGRAM_CHAT_ID;
   if (allowedChatId && String(chatId) !== String(allowedChatId)) return;
 
   // Si no empieza con "/", lo ignoramos
@@ -73,7 +73,7 @@ export default async function handler(request, env, ctx) {
     const linkWA = `https://wa.me/57${p.whatsapp}?text=Hola ${p.nombre}, tu pedido fue ${nuevoEstado} 🍭`;
 
     // 3. Enviar link de WhatsApp
-    const resWA = await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`, {
+    const resWA = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -87,12 +87,12 @@ export default async function handler(request, env, ctx) {
     await delay(5000); // Esperar 5s
 
     // 4. Enviar link al Admin
-    const resAdmin = await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`, {
+    const resAdmin = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: chatId,
-        text: `📊 [ABRIR PANEL ADMIN](${process.env.NEXT_PUBLIC_SITE_URL || 'https://happycorner.top'}/admin-v2)`,
+        text: `📊 [ABRIR PANEL ADMIN](${env.NEXT_PUBLIC_SITE_URL || 'https://happycorner.top'}/admin-v2)`,
         parse_mode: "Markdown",
       }),
     });
@@ -100,7 +100,7 @@ export default async function handler(request, env, ctx) {
 
     await delay(5000); // Limpiar
 
-    const delUrl = `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/deleteMessage`;
+    const delUrl = `https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/deleteMessage`;
     await fetch(delUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

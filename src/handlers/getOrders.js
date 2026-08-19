@@ -57,7 +57,7 @@ export default async function handler(request, env, ctx) {
 
                             if (customerEmail) {
                                 const customerName = oData.nombre || 'Cliente';
-                                const resendKey = process.env.RESEND_API_KEY;
+                                const resendKey = env.RESEND_API_KEY;
                                 if (resendKey) {
                                     const { Resend } = await import('resend');
                                     const resend = new Resend(resendKey);
@@ -193,8 +193,8 @@ export default async function handler(request, env, ctx) {
             const payloadObj = {
                 n: pedidoData.nombre, o: orderCode, p: totalDisplay, w: cleanNumber, res: pedidoData.resumen
             };
-            const tokenBase64 = signToken(payloadObj, process.env.ORDER_VERIFY_SECRET, { expiresInSeconds: 60 * 60 * 24 });
-            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://happycorner.top';
+            const tokenBase64 = signToken(payloadObj, env.ORDER_VERIFY_SECRET, { expiresInSeconds: 60 * 60 * 24 });
+            const siteUrl = env.NEXT_PUBLIC_SITE_URL || 'https://happycorner.top';
             const verifyLinkRaw = `${siteUrl}/verify?auth=${encodeURIComponent(tokenBase64)}`;
             // Crear link corto bajo el dominio de Happy Corner
             const shortCode = Math.random().toString(36).substring(2, 8); // 6 caracteres random
@@ -243,11 +243,11 @@ export default async function handler(request, env, ctx) {
                 `¡Mil gracias por ser parte de Happy Corner! ✨ Recuerda tener tu dinero físico o transferencia listos.`;
 
             // ENVIAR SOLO A TELEGRAM
-            const tgRes = await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`, {
+            const tgRes = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    chat_id: process.env.TELEGRAM_CHAT_ID,
+                    chat_id: env.TELEGRAM_CHAT_ID,
                     text: msg,
                     parse_mode: 'Markdown',
                     disable_web_page_preview: true,
